@@ -11,6 +11,7 @@ export interface ChatPortalState {
   portalArtifactDisplayMode?: 'code' | 'preview';
   portalFile?: PortalFile;
   portalMessageDetail?: string;
+  portalThreadStartMessageId?: string;
   portalToolMessage?: { id: string; identifier: string };
   showPortal: boolean;
 }

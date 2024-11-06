@@ -16,6 +16,7 @@ const isPluginUIOpen = (id: string) => (s: ChatStoreState) =>
 const toolUIIdentifier = (s: ChatStoreState) => s.portalToolMessage?.identifier;
 
 const showFilePreview = (s: ChatStoreState) => !!s.portalFile;
+const showThread = (s: ChatStoreState) => !!s.portalThreadStartMessageId;
 const previewFileId = (s: ChatStoreState) => s.portalFile?.fileId;
 const chunkText = (s: ChatStoreState) => s.portalFile?.chunkText;
 
@@ -54,6 +55,8 @@ export const chatPortalSelectors = {
 
   messageDetailId,
   showMessageDetail,
+
+  showThread,
 
   showPluginUI,
   showPortal,

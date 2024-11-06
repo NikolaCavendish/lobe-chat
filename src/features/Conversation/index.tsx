@@ -7,9 +7,10 @@ const ChatList = lazy(() => import('./components/VirtualizedList'));
 
 interface ConversationProps {
   mobile?: boolean;
+  threadMode?: boolean;
 }
 
-const Conversation = ({ mobile }: ConversationProps) => {
+const Conversation = ({ mobile, threadMode }: ConversationProps) => {
   return (
     <Flexbox
       flex={1}
@@ -21,7 +22,7 @@ const Conversation = ({ mobile }: ConversationProps) => {
       width={'100%'}
     >
       <Suspense fallback={<SkeletonList mobile={mobile} />}>
-        <ChatList mobile={mobile} />
+        <ChatList mobile={mobile} threadMode={threadMode} />
       </Suspense>
     </Flexbox>
   );

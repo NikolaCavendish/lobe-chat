@@ -21,6 +21,7 @@ import SkeletonList from '../SkeletonList';
 
 interface VirtualizedListProps {
   mobile?: boolean;
+  threadMode?: boolean;
 }
 const VirtualizedList = memo<VirtualizedListProps>(({ mobile }) => {
   const virtuosoRef = useRef<VirtuosoHandle>(null);

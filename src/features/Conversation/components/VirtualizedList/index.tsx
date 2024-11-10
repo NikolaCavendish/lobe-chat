@@ -19,11 +19,23 @@ import Item from '../ChatItem';
 import InboxWelcome from '../InboxWelcome';
 import SkeletonList from '../SkeletonList';
 
+const filterUntilTargetId = (idList: string[], targetId?: string) => {
+  if (!targetId) return idList;
+
+  const targetIndex = idList.indexOf(targetId);
+
+  // 如果找到目标id，则截取到该位置（包含该位置）
+  // 如果没找到目标id，则返回原数组
+  return targetIndex !== -1 ? idList.slice(0, targetIndex + 1) : idList;
+};
+
 interface VirtualizedListProps {
   mobile?: boolean;
+  threadMessageId?: string;
   threadMode?: boolean;
 }
-const VirtualizedList = memo<VirtualizedListProps>(({ mobile }) => {
+
+const VirtualizedList = memo<VirtualizedListProps>(({ mobile, threadMode, threadMessageId }) => {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const [atBottom, setAtBottom] = useState(true);
   const [isScrolling, setIsScrolling] = useState(false);
@@ -44,9 +56,13 @@ const VirtualizedList = memo<VirtualizedListProps>(({ mobile }) => {
 
   const data = useChatStore((s) => {
     const showInboxWelcome = chatSelectors.showInboxWelcome(s);
-    return showInboxWelcome
-      ? [WELCOME_GUIDE_CHAT_ID]
-      : chatSelectors.currentChatIDsWithGuideMessage(s);
+    if (showInboxWelcome) return [WELCOME_GUIDE_CHAT_ID];
+
+    const idList = chatSelectors.currentChatIDsWithGuideMessage(s);
+
+    if (threadMode) return filterUntilTargetId(idList, threadMessageId);
+
+    return idList;
   }, isEqual);
 
   useEffect(() => {

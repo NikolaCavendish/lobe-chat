@@ -49,9 +49,10 @@ const useStyles = createStyles(({ css, prefixCls, token }) => {
 interface FooterProps {
   expand: boolean;
   setExpand?: (expand: boolean) => void;
+  showSaveTopic?: boolean;
 }
 
-const Footer = memo<FooterProps>(({ setExpand, expand }) => {
+const Footer = memo<FooterProps>(({ setExpand, expand, showSaveTopic = true }) => {
   const { t } = useTranslation('chat');
 
   const { theme, styles } = useStyles();
@@ -118,7 +119,7 @@ const Footer = memo<FooterProps>(({ setExpand, expand }) => {
           {wrapperShortcut}
           <span>{t('input.warp')}</span>
         </Flexbox>
-        <SaveTopic />
+        {showSaveTopic && <SaveTopic />}
         <Flexbox style={{ minWidth: 92 }}>
           {isAIGenerating ? (
             <Button

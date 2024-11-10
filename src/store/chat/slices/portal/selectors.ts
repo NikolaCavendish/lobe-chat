@@ -16,7 +16,6 @@ const isPluginUIOpen = (id: string) => (s: ChatStoreState) =>
 const toolUIIdentifier = (s: ChatStoreState) => s.portalToolMessage?.identifier;
 
 const showFilePreview = (s: ChatStoreState) => !!s.portalFile;
-const showThread = (s: ChatStoreState) => !!s.portalThreadStartMessageId;
 const previewFileId = (s: ChatStoreState) => s.portalFile?.fileId;
 const chunkText = (s: ChatStoreState) => s.portalFile?.chunkText;
 
@@ -45,6 +44,9 @@ const isArtifactTagClosed = (id: string) => (s: ChatStoreState) => {
   return ARTIFACT_TAG_CLOSED_REGEX.test(content || '');
 };
 
+const showThread = (s: ChatStoreState) => !!s.portalThreadStartMessageId;
+const threadMessageId = (s: ChatStoreState) => s.portalThreadStartMessageId;
+
 /* eslint-disable sort-keys-fix/sort-keys-fix, typescript-sort-keys/interface */
 export const chatPortalSelectors = {
   isPluginUIOpen,
@@ -57,6 +59,7 @@ export const chatPortalSelectors = {
   showMessageDetail,
 
   showThread,
+  threadMessageId,
 
   showPluginUI,
   showPortal,

@@ -4,7 +4,7 @@ import { and, desc } from 'drizzle-orm/expressions';
 import { serverDB } from '@/database/server';
 import { ThreadStatus, ThreadType } from '@/types/topic';
 
-import { ThreadItem, threads } from '../schemas/lobechat';
+import { NewThread, ThreadItem, threads } from '../schemas/lobechat';
 
 interface CreateThreadParams {
   parentThreadId?: string;
@@ -23,10 +23,11 @@ export class ThreadModel {
     this.userId = userId;
   }
 
-  create = async (params: CreateThreadParams): Promise<ThreadItem> => {
+  create = async (params: Omit<NewThread, 'userId'>): Promise<ThreadItem> => {
     const result = await serverDB
       .insert(threads)
       .values({ ...params, userId: this.userId })
+      .onConflictDoNothing()
       .returning();
 
     return result?.[0] as ThreadItem;
